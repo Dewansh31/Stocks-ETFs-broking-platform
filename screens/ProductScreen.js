@@ -20,7 +20,7 @@ const ProductScreen = (props) => {
   const [mini, setMini] = useState(0);
   const [maxi, setMaxi] = useState(100);
   const [avg, setAvg] = useState(0);
-  const [value, setValue] = useState('W');
+  const [value, setValue] = useState('I');
 
   const [data, setData] = useState({
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
