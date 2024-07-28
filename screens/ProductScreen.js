@@ -14,16 +14,14 @@ import PointBetweenNumbers from '../components/PointBetweenNumbers';
 import RadioButtonGroup from '../components/RadioButtonGroup';
 
 const ProductScreen = (props) => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const screenWidth = Dimensions.get('window').width;
-  const [symbol,setSymbol] = useState(props.route.params.item.ticker)
+  const [symbol, setSymbol] = useState(props.route.params.item.ticker)
   const [detail, setDetail] = useState({});
   const [mini, setMini] = useState(0);
   const [maxi, setMaxi] = useState(100);
   const [avg, setAvg] = useState(0);
   const [value, setValue] = useState('W');
- 
+
   const [data, setData] = useState({
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [
@@ -42,7 +40,7 @@ const ProductScreen = (props) => {
   const API_URL5 = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${API_KEY}`;
 
   const fetchData = async (name) => {
-    console.log("name:",name);
+    console.log("name:", name);
     try {
       const API_URL = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${name}&apikey=${API_KEY}`;
 
@@ -54,8 +52,8 @@ const ProductScreen = (props) => {
       setAvg(result['50DayMovingAverage']);
       setDetail(result);
     } catch (error) {
-      setError(error);
-    } 
+      console.log(error);
+    }
   };
 
   const fetchGraphData_Intraday = async () => {
@@ -81,9 +79,7 @@ const ProductScreen = (props) => {
       });
 
     } catch (error) {
-      setError(error);
-    } finally {
-      // setLoading(false);
+      console.log(error);
     }
   };
 
@@ -110,9 +106,7 @@ const ProductScreen = (props) => {
       });
 
     } catch (error) {
-      setError(error);
-    } finally {
-      // setLoading(false);
+      console.log(error);
     }
   };
 
@@ -137,9 +131,7 @@ const ProductScreen = (props) => {
       });
 
     } catch (error) {
-      setError(error);
-    } finally {
-      // setLoading(false);
+      console.log(error);
     }
   };
 
@@ -164,9 +156,7 @@ const ProductScreen = (props) => {
       });
 
     } catch (error) {
-      setError(error);
-    } finally {
-      // setLoading(false);
+      console.log(error);
     }
   };
 
@@ -229,7 +219,12 @@ const ProductScreen = (props) => {
                 justifyContent: 'around',
               }}>
               <Text>{detail.ReturnOnEquityTTM}%</Text>
-              <Icon name="arrow-drop-up" size={25} color="green" />
+              {(parseInt(detail.ReturnOnEquityTTM) >= 0)
+                ?
+                <Icon name="arrow-drop-up" size={25} color="green" />
+                :
+                <Icon name="arrow-drop-down" size={25} color="red" />
+              }
             </View>
           </View>
         </View>
